@@ -1,2 +1,7 @@
 **/logs
 *.md
+*.log
+.idea
+**/out
+**/lib
+**/target
