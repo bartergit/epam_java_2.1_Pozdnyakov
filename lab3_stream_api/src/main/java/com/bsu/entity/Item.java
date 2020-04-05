@@ -72,7 +72,9 @@ public class Item {
         sb.append(", count=");
         sb.append(count);
         sb.append(", stores=[");
-        stores.forEach(it-> sb.append(it.getName()+"', "));
+        try {
+            stores.forEach(it -> sb.append("'" + it.getName() + "', "));
+        } catch (Exception ex){}
         sb.append("]}");
         return sb.toString();
     }

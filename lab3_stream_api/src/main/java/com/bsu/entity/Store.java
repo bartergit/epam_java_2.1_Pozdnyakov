@@ -1,5 +1,6 @@
 package com.bsu.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,10 +38,20 @@ public class Store {
     }
 
     public Store() {
+        this.feedbackList = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
     public Store(String name) {
         this.name = name;
+        this.feedbackList = new ArrayList<>();
+        this.items = new ArrayList<>();
+    }
+
+    public Store(String name, List<String> feedbackList) {
+        this.name = name;
+        this.feedbackList = feedbackList;
+        this.items = new ArrayList<>();
     }
 
     public Store(String name, List<Item> items, List<String> feedbackList) {
@@ -56,8 +67,11 @@ public class Store {
         sb.append(name);
         sb.append("', feedbackList=");
         sb.append(feedbackList);
-        sb.append(", items=['");
-        items.forEach(it -> sb.append(it.getName() + "', "));
+        sb.append(", items=[");
+        try {
+            items.forEach(it -> sb.append("'" + it.getName() + "', "));
+        } catch (Exception ex) {
+        }
         sb.append("]}");
         return sb.toString();
     }

@@ -11,6 +11,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+//        - проверить, есть ли товары, дороже 500;
+//        − Найти товары с максимальным и минимальным количеством единиц на складе
+//        − Отфильтровать товары с единственным магазином
+//        − Отсортировать товары по цене и количеству
+//        − Получить список магазинов
+//        − Напечатать информацию о магазинах, используя foreach
+//        − Получить список магазинов без дубликатов
+
 public class StreamController {
     private static final Logger log = LogManager.getLogger(StreamController.class.getName());
 
@@ -20,31 +28,16 @@ public class StreamController {
     public boolean isMoreThen500Exist(List<Item> itemList) {
         return itemList.stream().filter((it) -> it.getPrice() > 500).peek(it -> log.debug(it)).count() > 0 ? true : false;
     }
-
-    public boolean isMoreThen500ExistPar(List<Item> itemList) {
-        return itemList.parallelStream().filter((it) -> it.getPrice() > 500).peek(it -> log.debug(it)).count() > 0 ? true : false;
-    }
-
+    //two different approach to return optional object
     public Item max(List<Item> itemList) {
         Optional<Item> max_optional = itemList.stream().max(Comparator.comparingInt(Item::getCount));
-        if (!max_optional.isPresent())
-            System.out.println("List is probably empty");
-        return max_optional.orElse(new Item());
-    }
-
-    public Item maxPar(List<Item> itemList) {
-        Optional<Item> max_optional = itemList.parallelStream().max(Comparator.comparingInt(Item::getCount));
-        if (!max_optional.isPresent())
+        if (!max_optional.isPresent())                           //first approach
             System.out.println("List is probably empty");
         return max_optional.orElse(new Item());
     }
 
     public Item min(List<Item> itemList) throws Exception {
-        return itemList.stream().min(Comparator.comparingInt(Item::getCount)).orElseThrow(Exception::new);
-    }
-
-    public Item minPar(List<Item> itemList) throws Exception {
-        return itemList.parallelStream().min(Comparator.comparingInt(Item::getCount)).orElseThrow(Exception::new);
+        return itemList.stream().min(Comparator.comparingInt(Item::getCount)).orElseThrow(Exception::new);  //sec approach
     }
 
     public List<Item> existInOneStore(List<Item> itemList) {
@@ -59,17 +52,17 @@ public class StreamController {
         return itemList.parallelStream().sorted(Comparator.comparing(Item::getPrice).thenComparing(Item::getCount)).collect((Collectors.toCollection(ArrayList::new)));
     }
 
-
-    public List<Item> sortByPriceAndCountPar(List<Item> itemList) {
-        return itemList.parallelStream().sorted(Comparator.comparing(Item::getPrice).thenComparing(Item::getCount)).collect((Collectors.toCollection(ArrayList::new)));
+    public List<String> getStoreList(List<Store> storeList) {
+        return storeList.stream().map(store->store.getName()).collect(Collectors.toList());
     }
 
-    public List<Store> getStores(List<Item> itemList) {
-        List<Store> stores = new ArrayList();
-        itemList.stream().forEach(item -> {
-            stores.addAll(item.getStores());
-            log.debug(item.getStores());
-        });
-        return stores.stream().distinct().collect(Collectors.toList());
+    public void printStoreInfo(List<Store> storeList) {
+        System.out.println("Store info: ");
+        storeList.stream().forEach(store->System.out.println(store));
     }
+
+    public List<Store> getStoreListWithoutDublicates(List<Store> storeList) {
+        return storeList.stream().distinct().peek(store->log.debug(store.getName())).collect(Collectors.toList());
+    }
+
 }
