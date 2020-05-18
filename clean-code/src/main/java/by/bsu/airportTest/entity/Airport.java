@@ -1,25 +1,21 @@
-import model.MilitaryType;
-import plane.ExperimentalPlane;
-import plane.MilitaryPlane;
-import plane.PassengerPlane;
-import plane.Plane;
+package by.bsu.airportTest.entity;
+
+import by.bsu.airportTest.model.MilitaryType;
+import by.bsu.airportTest.entity.plane.ExperimentalPlane;
+import by.bsu.airportTest.entity.plane.MilitaryPlane;
+import by.bsu.airportTest.entity.plane.PassengerPlane;
+import by.bsu.airportTest.entity.plane.Plane;
 
 import java.util.*;
-
-// version: 1.1
-// made by Vitali Shulha
-// 4-Jan-2019
 
 public class Airport {
     private List<? extends Plane> planes;
 
-
-    //Constructor
     public Airport(List<? extends Plane> planes) {
         this.planes = planes;
     }
 
-    public List<PassengerPlane> getPasPl() {
+    public List<PassengerPlane> getPassengerPlanes() {
         List<? extends Plane> l = this.planes;
         List<PassengerPlane> x = new ArrayList<>();
         for (Plane p : l) {
@@ -41,7 +37,7 @@ public class Airport {
     }
 
     public PassengerPlane getPassengerPlaneWithMaxPassengersCapacity() {
-        List<PassengerPlane> passengerPlanes = getPasPl();
+        List<PassengerPlane> passengerPlanes = getPassengerPlanes();
         PassengerPlane planeWithMaxCapacity = passengerPlanes.get(0);
         for (int i = 0; i < passengerPlanes.size(); i++) {
             if (passengerPlanes.get(i).getPassengersCapacity() > planeWithMaxCapacity.getPassengersCapacity()) {
@@ -89,32 +85,20 @@ public class Airport {
     }
 
     public Airport sortByMaxDistance() {
-        Collections.sort(planes, new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.Get_Max_Flight_Distance() - o2.Get_Max_Flight_Distance();
-            }
-        });
+        Collections.sort(planes, (Comparator<Plane>) (o1, o2) -> o1.Get_Max_Flight_Distance() - o2.Get_Max_Flight_Distance());
         return this;
     }
 
-    /**
-     * Sorts by max speed
-     *
-     * @return Airport
-     */
+
     public Airport sortByMaxSpeed() {
-        Collections.sort(planes, new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.getMS() - o2.getMS();
-            }
-        });
+        Collections.sort(planes, (Comparator<Plane>) (o1, o2) -> o1.getMS() - o2.getMS());
         return this;
     }
 
     public Airport sortByMaxLoadCapacity() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.getMinLoadCapacity() - o2.getMinLoadCapacity();
+                return o1.getMaxLoadCapacity() - o2.getMaxLoadCapacity();
             }
         });
         return this;
@@ -134,7 +118,7 @@ public class Airport {
 
     @Override
     public String toString() {
-        return "Airport{" +
+        return "by.bsu.airPort.entity.Airport{" +
                 "Planes=" + planes.toString() +
                 '}';
     }

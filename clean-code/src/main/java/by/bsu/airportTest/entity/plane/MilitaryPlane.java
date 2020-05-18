@@ -1,6 +1,6 @@
-package plane;
+package by.bsu.airportTest.entity.plane;
 
-import model.MilitaryType;
+import by.bsu.airportTest.model.MilitaryType;
 
 import java.util.Objects;
 

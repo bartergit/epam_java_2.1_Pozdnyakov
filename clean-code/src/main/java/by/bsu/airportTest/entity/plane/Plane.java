@@ -1,4 +1,4 @@
-package plane;
+package by.bsu.airportTest.entity.plane;
 
 import java.util.Objects;
 
@@ -27,14 +27,14 @@ abstract public class Plane {
         return maxFlightDistance;
     }
 
-    public int getMinLoadCapacity() {
+    public int getMaxLoadCapacity() {
         return maxLoadCapacity;
     }
 
     @Override
     public String toString() {
         return "Plane{" +
-                "model='" + model + '\'' +
+                "by.bsu.airPort.model='" + model + '\'' +
                 ", maxSpeed=" + maxSpeed +
                 ", maxFlightDistance=" + maxFlightDistance +
                 ", maxLoadCapacity=" + maxLoadCapacity +
