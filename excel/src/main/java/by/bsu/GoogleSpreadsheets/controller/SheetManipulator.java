@@ -65,9 +65,9 @@ public class SheetManipulator {
     }
 
     private Sheets getService() throws GeneralSecurityException, IOException {
-            return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, getCredentials())
-            .setApplicationName(applicationName)
-            .build();
+        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, getCredentials())
+                .setApplicationName(applicationName)
+                .build();
     }
 
     public String showTable() throws IOException, GeneralSecurityException { //1NikstCejlPwT-iM3jCJIaeNeCZZVcVTLiY6U1ux0ISg
@@ -78,9 +78,9 @@ public class SheetManipulator {
                 .get(spreadsheetId, range)
                 .execute();
         StringBuilder stringBuilder = new StringBuilder();
-        for (List<Object> line:response.getValues()) {
-            for (Object item:line) {
-                stringBuilder.append((String)item).append(", ");
+        for (List<Object> line : response.getValues()) {
+            for (Object item : line) {
+                stringBuilder.append((String) item).append(", ");
             }
             stringBuilder.append("\n");
         }
@@ -95,10 +95,10 @@ public class SheetManipulator {
                 .execute();
         StringBuilder stringBuilder = new StringBuilder();
         String line = "A" + String.valueOf(response.getValues().size() + 1);
-        ValueRange body = new ValueRange().setValues(Arrays.asList(Arrays.asList(name,surname,thirdName,age)));
+        ValueRange body = new ValueRange().setValues(Arrays.asList(Arrays.asList(name, surname, thirdName, age)));
         service.spreadsheets().values()
-            .update(spreadsheetId, line, body)
-            .setValueInputOption("RAW").execute();
+                .update(spreadsheetId, line, body)
+                .setValueInputOption("RAW").execute();
         return stringBuilder.toString();
     }
 
@@ -110,22 +110,4 @@ public class SheetManipulator {
     public void setSpreadsheetId(String spreadsheetId) {
         this.spreadsheetId = spreadsheetId;
     }
-
-//    public void change(String spreadsheetId) throws IOException, GeneralSecurityException { //1NikstCejlPwT-iM3jCJIaeNeCZZVcVTLiY6U1ux0ISg
-//        // Build a new authorized API client service.
-//        ValueRange response = service.spreadsheets().values()
-//                .get(spreadsheetId, range)
-//                .execute();
-//        List<List<Object>> values = response.getValues();
-//        if (values == null || values.isEmpty()) {
-//            System.out.println("No data found.");
-//        } else {
-//            for (List row : values) {
-//            }
-//        }
-//        ValueRange body = new ValueRange().setValues(Arrays.asList(values.get(0)));
-//        UpdateValuesResponse result = service.spreadsheets().values()
-//                .update(spreadsheetId, "A7", body)
-//                .setValueInputOption("RAW").execute();
-//    }
 }
